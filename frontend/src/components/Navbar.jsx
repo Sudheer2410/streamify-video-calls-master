@@ -3,6 +3,11 @@ import useAuthUser from "../hooks/useAuthUser";
 import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import useLogout from "../hooks/useLogout";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+
+const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:5001" : window.location.origin;
+const socket = io(SOCKET_URL, { withCredentials: true });
 
 const Navbar = () => {
   const { authUser } = useAuthUser();
@@ -16,6 +21,14 @@ const Navbar = () => {
   // });
 
   const { logoutMutation } = useLogout();
+  const [onlineUsers, setOnlineUsers] = useState(0);
+
+  useEffect(() => {
+    socket.on("onlineUsers", setOnlineUsers);
+    return () => {
+      socket.off("onlineUsers", setOnlineUsers);
+    };
+  }, []);
 
   return (
     <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center">
@@ -55,6 +68,7 @@ const Navbar = () => {
             <LogOutIcon className="h-6 w-6 text-base-content opacity-70" />
           </button>
         </div>
+        <div>Online users: {onlineUsers}</div>
       </div>
     </nav>
   );
