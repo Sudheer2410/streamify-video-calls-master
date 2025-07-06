@@ -13,6 +13,7 @@ import { capitialize } from "../lib/utils";
 
 import FriendCard, { getLanguageFlag } from "../components/FriendCard";
 import NoFriendsFound from "../components/NoFriendsFound";
+import OnlineUsers from "../components/OnlineUsers";
 
 const HomePage = () => {
   const queryClient = useQueryClient();
@@ -164,6 +165,10 @@ const HomePage = () => {
             </div>
           )}
         </section>
+
+        <div className="home-content">
+          <OnlineUsers />
+        </div>
       </div>
     </div>
   );

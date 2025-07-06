@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
 import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon } from "lucide-react";
+import OnlineUsers from "./OnlineUsers";
 
 const Sidebar = () => {
   const { authUser } = useAuthUser();
@@ -49,6 +50,10 @@ const Sidebar = () => {
           <span>Notifications</span>
         </Link>
       </nav>
+
+      <div className="sidebar-content">
+        <OnlineUsers />
+      </div>
 
       {/* USER PROFILE SECTION */}
       <div className="p-4 border-t border-base-300 mt-auto">

@@ -43,7 +43,8 @@ export async function signup(req, res) {
       });
       console.log(`Stream user created for ${newUser.fullName}`);
     } catch (error) {
-      console.log("Error creating Stream user:", error);
+      console.log("Error creating Stream user (non-critical):", error.message);
+      // Continue with signup even if Stream fails
     }
 
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
